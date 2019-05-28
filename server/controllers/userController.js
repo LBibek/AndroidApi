@@ -54,5 +54,20 @@ exports.updateUser = function(req, res){
          res.send('error on updating')
      })
 }
+exports.deleteUser = function(req, res){
+    var data = req.body;
+    // models.User.findByIdAndUpdate(req.params.userId, {
+             
+    // })
+    models.User.findByIdAndRemove(req.params.userId
+        )
+    .then(function(response){
+        res.send("User Deleted")     
+     })
+     .catch(function(err){
+         res.send('error on Deleting')
+     })
+}
+
 
 

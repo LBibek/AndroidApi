@@ -62,6 +62,23 @@ function loaditem(){
           $scope.singleUser = res.data;
       })
   }
+
+  $scope.deleteUser = function(id){
+      $scope.sure = function(){
+          console.log('dsad');
+        $http.post('/delete/user/'+id).then(function(res){
+            console.log(res.data);
+            $scope.message = res.data;
+            $timeout(function(){
+            $scope.message = '';
+            }, 3000);
+           loaduser();
+        });
+      }
+}
+
+
+
   $scope.updateUser = function(id){
       console.log($scope.singleUser);
     $http.post('/update/user/'+id, $scope.singleUser).then(function(res){
