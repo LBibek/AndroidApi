@@ -20,6 +20,24 @@
         }</style>
         </style>
       <%}%>
+      <% if(pageId == 'messages'){%>
+        <% include templates/messages.html%>  
+        <style>
+            #tab3{
+                border-right: 3px solid #c5c1c1;
+            }
+        </style>
+        <style ng-if="set.lightMode == true">
+            header{
+            background: white;
+            color: black;
+        }
+        aside{
+            background: white;
+            color: black;
+        }</style>
+        </style>
+      <%}%>
       <% if(pageId == 'items'){%>
         <h1>hello me kamal</h1>
         <% include templates/items.html%>  

@@ -1,0 +1,144 @@
+<div class="col-md-12 messages-wrapper">
+    <div class="col-md-12 message-content form-control" style="height: 400px;    overflow: auto;    margin-top: 16px;">
+         <div id="op"></div>
+    </div>
+    <div class="col-md-12 buttons" style="padding: 0px;    margin: 11px 0px;">
+        <p id="alert" style="    position: fixed;
+        top: 96px;
+        z-index: 99;
+        background: #444444;
+        color: white;
+        border-radius: 9px;
+        padding: 9px;
+        display: none;
+        right: 124px;">one new message</p>
+        <div id="user-message" style="    position: fixed;
+        top: 96px;
+        z-index: 99;
+        color: white;
+        border-radius: 9px;
+        padding: 9px;
+        display:none;
+        right: 124px;">
+        </div>
+        <div id="user-connect" style="    position: fixed;
+        bottom: 100px;
+        z-index: 99;
+        color: white;
+        border-radius: 9px;
+        padding: 9px;
+        display:none;
+        right: 100px;">
+        </div>
+        <div  class="col-md-11" style="padding:0px ; display: flex;" >
+                <input type="text" placeholder="enter name here.." class="form-control" id="name" style="width: 40%">
+                <input type="text" placeholder="enter message here.." class="form-control" id="message" style="width:60%">
+            </div>
+        <button class="fa fa-paper-plane btn btn-default col-md-1" style="    padding: 8.3px;" id="send"></button>
+        <div class="form-control">
+            <button class="btn btn-default wt-name">What is your name?</button>
+            <button class="btn btn-default wt-age">What is your age?</button>
+            <button class="btn btn-default wt-contact">What is your contact?</button>
+        </div>
+    </div>
+</div>
+<style>
+.message-body{
+    background: #d6ffd5;
+    padding: 9px;
+    border-radius: 5px;
+}
+.fa-user{
+    background: #c5c5c5;
+    padding: 6px 8px;
+    border-radius: 37px;
+    margin-right: 4px;
+    color: white;
+    font-size: 17px;
+}
+.fa-check{
+    background: white;
+    padding: 6px 8px;
+    border-radius: 40px;
+    margin-right: 4px;
+    color: black;
+    font-size: 15px;
+}
+.fa-times{
+    background: white;
+    padding: 6px 8px;
+    border-radius: 40px;
+    margin-right: 4px;
+    color: black;
+    font-size: 15px;
+}
+#user-message p{
+    background: orangered;
+margin-bottom:4px;
+padding: 4px;
+}
+#user-connect p{
+    background: green;
+margin-bottom:4px;
+padding: 4px;
+}
+</style>
+<script>
+// $(document).ready(function(){
+//   make connection
+var socket = io.connect('');
+    $('#send').click(function(){
+    var message = $('#message').val();
+    var name = $('#name').val();
+    console.log(message);
+    socket.emit('chat', {
+        message: message,
+        name: name
+    });
+})
+
+// name 
+$('.wt-name').click(function(){
+    console.log('hello');
+    socket.emit('name', {
+        message: 'name',
+    });
+})
+$('.wt-age').click(function(){
+    socket.emit('age', {
+        message: 'age',
+    });
+})
+$('.wt-contact').click(function(){ 
+    socket.emit('contact', {
+        message: 'contact',
+    });
+})
+// listen event from server
+socket.on('chat', function(data){
+  $('#op').append("<p class='message-body'><span class='fa fa-user'></span><b>"+data.name+"</b>: "+data.message +"</p>");
+  console.log(data.message);
+  $('#alert').fadeIn();
+   setTimeout(function(){
+    $('.message-body').css('background','none');
+  $('#alert').fadeOut();
+   }, 3000)
+});
+// })
+socket.on('disconnect', function(data){
+    $('#user-message').html("<p class=''><span class='fa fa-times'></span><b>"+data.message+"</b></p>");
+    $('#user-message').fadeIn();
+    setTimeout(function(){
+      $('#user-message').fadeOut();
+   }, 3000)
+});
+
+socket.on('connected', function(data){
+    $('#user-connect').html("<p class=''><span class='fa fa-check'></span><b>"+data.message+"</b></p>");
+    $('#user-connect').fadeIn();
+    setTimeout(function(){
+      $('#user-connect').fadeOut();
+   }, 3000)
+});
+// end
+</script>

@@ -2,7 +2,7 @@ exports.getPage = function(req, res){
     var pageId = req.params.pageId;
     console.log(pageId);
     
-     if(pageId == 'users' || pageId == 'items'){
+     if(pageId == 'users' || pageId == 'items' || pageId == 'messages'){
         res.render('index', {
             pageId: pageId
         });

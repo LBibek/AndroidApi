@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
+
+
 var item = new Schema({
     itemName: String,
     itemPrice: String,
@@ -20,3 +22,7 @@ var setting = new Schema({
     dataAuth: {type: Boolean, default: false}
 })
 exports.Setting = mongoose.model('Setting', setting);
+
+
+ 
+ 

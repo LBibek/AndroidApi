@@ -9,8 +9,16 @@ var user = new Schema({
     l_name: String,
     password: String,
     u_name: String,
+    token:[{
+        token:{
+            type:String, 
+            require: true
+        }
+    }],
+
     isDeleted: {type: Boolean, default: false},
     created_date: Date
 });
+
 
 exports.User = mongoose.model('User', user);
